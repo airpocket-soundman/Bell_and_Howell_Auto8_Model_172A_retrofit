@@ -6,9 +6,40 @@
 |microSD|32GB以上|
 |OS|Bullseye 64bit lite|
 
+# OS version
+OS:Raspberry Pi OS Bullseye 64bit lite
+
+```
+$ lsb_release -a
+No LSB modules are available.
+Distributor ID: Debian
+Description:    Debian GNU/Linux 11 (bullseye)
+Release:        11
+Codename:       bullseye
+
+$ getconf LONG_BIT
+64
+```
 
 # USB SSHの有効化
+config.txtに追記
+dtoverlay=dwc2
 
+commandline.txtのrootwait とquietの間に[]の中を追記
+rootwait [modules-load=dwc2,g_ether] quiet
+
+USB SSH化推奨
+
+USB OTGするときは左側のmicro USBコネクタ
+
+windowsにドライバインストールすること
+
+# wifi setting
+```
+sudo raspi-config
+```
+1 System Options -> S1 Wireless LAN
+SSIDとPassphraseを入力
 
 # setup
 ```
