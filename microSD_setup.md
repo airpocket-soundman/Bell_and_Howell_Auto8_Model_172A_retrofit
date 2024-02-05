@@ -120,8 +120,36 @@ tmpfs           128M     0  128M   0% /tmp
 /dev/mmcblk0p1  255M   31M  225M  13% /boot
 tmpfs            42M     0   42M   0% /run/user/1000
 ```
+## Flaskのインスト―ル
+```
+pip install flask
+```
+flaskでapp.pyを実行するには
+ただしUSBシリアルでは通信できない
+```
+flask run --host=0.0.0.0
+```
 
 ## sambaサーバー
+```
+sudo apt install samba
+mkdir /home/[user]/share
+sudo chmod 777 /home/[user]/share
+sudo nano /etc/samba/smb.conf
+```
+追記
+```
+[share]
+   comment = user file space
+   path = /home/[user]/share
+   force user = [user]
+   guest ok = no
+   create mask = 0777
+   directory mask = 0777
+   read only = no
+
+```
+sudo systemctl restart smbd
 
 ## vim
 sudo apt install vim

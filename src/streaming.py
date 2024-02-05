@@ -5,18 +5,19 @@ import time
 import numpy as np
 from typing import List
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='temlates')   #templates_folderはデフォルトで'templates'なので本来定義は不要
 
-CAP_WIDTH   = 320                #出力動画の幅
-CAP_HEIGHT = 240                #出力動画の高さ
-LAW_WIDTH   = 2304              #カメラ内のraw画像の幅
-LAW_HEIGHT = 1296              #カメラ内のraw画像の高さ
+CAP_WIDTH   = 320                   #出力動画の幅
+CAP_HEIGHT  = 240                   #出力動画の高さ
+LAW_WIDTH   = 2304                  #カメラ内のraw画像の幅
+LAW_HEIGHT  = 1296                  #カメラ内のraw画像の高さ
 
+image_sensor = "IMX219"             #IMX219/IMX708
 folder_path ="/tmp/img"
-movie_length = 100           #撮影するフレーム数
+movie_length = 100                  #撮影するフレーム数
 time_list = []
-exposure_time = 5000       #イメージセンサの露出時間
-analog_gain = 20.0               #イメージセンサのgain
+exposure_time = 5000                #イメージセンサの露出時間
+analog_gain = 20.0                  #イメージセンサのgain
 
 def gen_frames():
     print("gen_frames")
@@ -56,6 +57,7 @@ def video_feed():
 @app.route('/index')
 def index():
    
-    user = {'username' : 'Raspberry Pi zero2 W',
-            'modelname': "streaming"}
+    user = {'username'      : 'Raspberry Pi zero2 W',
+            'image sensor'  : image_sensor,
+            'lens'          : ""}
     return render_template('index.html', title='home', user=user)

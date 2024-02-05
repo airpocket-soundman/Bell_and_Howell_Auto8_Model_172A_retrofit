@@ -3,10 +3,12 @@ from picamera2 import Picamera2
 import os
 import time
 
-image_list = []
-time_list = []
-width  = 640 			#4608, 2304, 1536. 1153, 640,, 1152     1240
-height = 480			#2592, 1296,  864,  648, 360,,  864      930
+image_list  = []
+time_list   = []
+cap_width   =  640 			#4608, 2304, 1536. 1153, 640,, 1152     1240
+cap_height  =  480			#2592, 1296,  864,  648, 360,,  864      930
+raw_width   = 1640
+raw_height  = 1232
 exposure_time = 5000	# 1000-100000  defo:5000
 analog_gain   = 5.0		# 1.0-20.0    defo:5.0
 
@@ -50,7 +52,8 @@ else:
     print(f'{folder_path}は既に存在しています。')
 
 camera = Picamera2()
-config = camera.create_preview_configuration(main = {"format": 'XRGB8888', "size": (width, height)})
+#config = camera.create_preview_configuration(main = {"format": 'XRGB8888', "size": (cap_width, cap_height)})
+config = camera.create_preview_configuration(main = {"size":(cap_width, cap_height)}, raw = {"size":(raw_width, raw_height)})
 camera.configure(config)
 camera.set_controls({"ExposureTime": exposure_time, "AnalogueGain": analog_gain})
 camera.start()
