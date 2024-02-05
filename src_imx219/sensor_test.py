@@ -15,7 +15,7 @@ movie_file_name = "test.mp4"
 codec = cv2.VideoWriter_fourcc(*'mp4v')
 record_fps = 16
 
-test_frame_times = 1000
+test_frame_times = 100
 frame_counter = 0
 
 #folder_path = "/home/airpocket/Workspace/picamera2_test/img"

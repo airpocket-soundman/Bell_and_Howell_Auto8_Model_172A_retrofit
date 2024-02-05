@@ -39,7 +39,20 @@ windowsにドライバインストールすること
 sudo raspi-config
 ```
 1 System Options -> S1 Wireless LAN
-SSIDとPassphraseを入力
+SSIDとPassphraseを入力config.txtに追記
+dtoverlay=dwc2
+
+cmdline.txtのrootwait と quiet の間にスペース区切りで以下の文字列を追加
+modules-load=dwc2,g_ether
+
+
+# networkの設定
+sudo raspi-config
+ 1 System Options -> S1 Wireless Lan
+
+sudo reboot
+
+
 
 # setup
 ```
@@ -58,6 +71,11 @@ sudo nano /boot/config.txt
 ```
 
 dtoverlay=imx219
+
+```
+sudo raspi-config
+```
+3 Interface Options -> I1 Legacy Camera -> No
 
 
 ### IMX708 (camera V3の場合)
@@ -80,15 +98,41 @@ sudo nano /etc/fstab
 ```
 以下の行を追加
 ```
-tmpfs /tmp tmpfs defaults,size=64m,noatime,mode=1777 0 0
+tmpfs /tmp tmpfs defaults,size=128m,noatime,mode=1777 0 0
 ```
 microSD上の/tmpを削除する
 ```
 sudo rm -rf /tmp
 ```
+```
+$ free -m
+               total        used        free      shared  buff/cache   available
+Mem:             419          73         193           0         151         292
+Swap:              0           0           0
+df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        29G  1.9G   26G   7% /
+devtmpfs         80M     0   80M   0% /dev
+tmpfs           210M     0  210M   0% /dev/shm
+tmpfs            84M  928K   83M   2% /run
+tmpfs           5.0M  4.0K  5.0M   1% /run/lock
+tmpfs           128M     0  128M   0% /tmp
+/dev/mmcblk0p1  255M   31M  225M  13% /boot
+tmpfs            42M     0   42M   0% /run/user/1000
+```
 
+## sambaサーバー
 
-## sambaサーバー　
+## vim
+sudo apt install vim
+
+vim ~/.vimrc
+
+set number
+syntax enable
+set expandtab
+set tabstop=4
+set shiftwidth=4
 
 ## data保存フォルダをマウントする
 FAT32もしくはexFATでフォルダをマウントすることで、Win上からも直接読み込めるデータフォルダを作成する。
