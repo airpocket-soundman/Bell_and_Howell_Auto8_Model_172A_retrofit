@@ -42,16 +42,11 @@ sudo raspi-config
 SSIDとPassphraseを入力config.txtに追記
 dtoverlay=dwc2
 
-cmdline.txtのrootwait と quiet の間にスペース区切りで以下の文字列を追加
-modules-load=dwc2,g_ether
-
-
 # networkの設定
 sudo raspi-config
  1 System Options -> S1 Wireless Lan
 
 sudo reboot
-
 
 
 # setup
@@ -125,7 +120,6 @@ tmpfs            42M     0   42M   0% /run/user/1000
 pip install flask
 ```
 flaskでapp.pyを実行するには
-ただしUSBシリアルでは通信できない
 ```
 flask run --host=0.0.0.0
 ```
@@ -143,7 +137,7 @@ sudo nano /etc/samba/smb.conf
    comment = user file space
    path = /home/[user]/share
    force user = [user]
-   guest ok = no
+   guest ok = yes
    create mask = 0777
    directory mask = 0777
    read only = no

@@ -34,7 +34,7 @@ def get_images():
 
 def movie_save():
 
-    video = cv2.VideoWriter(movie_file_name, codec, record_fps, (width, height))
+    video = cv2.VideoWriter(movie_file_name, codec, record_fps, (cap_width, cap_height))
     if not video.isOpened():
         print("can't be opened")
         sys.exit()
