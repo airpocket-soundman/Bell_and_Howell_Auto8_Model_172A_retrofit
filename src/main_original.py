@@ -5,10 +5,7 @@
 # ============================
 # spring loaded digital camera
 #
-# controler program ver.2.0.0
-# camera:Bell & Howell auto 8 model 172A
-# image sensor:IMX219
-# board:test board V1.0
+# controler program ver.1.2.0
 # ============================
 
 import cv2
@@ -31,6 +28,8 @@ dip4Pin             = 14
 dip5Pin             = 15
 dip6Pin             = 0
 
+sensor              = 0     #0:IMX219   1:IMX708
+camera              = 0
 shutterDelay        = 0.00  #sec
 stillNum            = 1
 filmNum             = 1

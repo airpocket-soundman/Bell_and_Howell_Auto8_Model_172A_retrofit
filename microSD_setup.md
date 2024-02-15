@@ -28,6 +28,8 @@ dtoverlay=dwc2
 commandline.txtのrootwait とquietの間に[]の中を追記
 rootwait [modules-load=dwc2,g_ether] quiet
 
+
+
 USB SSH化推奨
 
 USB OTGするときは左側のmicro USBコネクタ
@@ -39,8 +41,7 @@ windowsにドライバインストールすること
 sudo raspi-config
 ```
 1 System Options -> S1 Wireless LAN
-SSIDとPassphraseを入力config.txtに追記
-dtoverlay=dwc2
+SSIDとPassphraseを入力
 
 # networkの設定
 sudo raspi-config
