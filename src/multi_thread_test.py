@@ -8,16 +8,16 @@ import threading
 image_list = []
 time_list = []
 
-cap_width  =  800 	#640 max 
-cap_height =  600	#480
+cap_width  =  640 	#640(defo), 320(high speed)
+cap_height =  480	#480(defo), 240(high speed)
 
 #IMX708
-raw_width  =  2304 	#4608(f), 2304(f), 1536
-raw_height =  1296	#2592(f), 1296(f),  864
+raw_width  =  2304	#4608(f), 2304(full/defo), 1536, 320(high speed)
+raw_height =  1296	#2592(f), 1296(full/defo),  864, 240(high speed)
 
 #IMX219
-#raw_width  = 1640	#3280, 1640, 1280,  640
-#raw_height = 1232	#2464, 1232,  720,  480
+#raw_width  = 1640	#3280(f), 1640(full/defo), 1280, 320(high speed)
+#raw_height = 1232	#2464(f), 1232(full/defo),  720, 240(high speed)
 
 exposure_time = 5000	# 1000-100000  defo:5000
 analog_gain   = 10.0		# 1.0-20.0    defo:5.0
@@ -68,7 +68,7 @@ config      = camera.create_preview_configuration(main={"format": 'RGB888', "siz
 #                                                  raw    = {"size":(raw_width, raw_height)}, 
 #                                                  lores  = {"size":(cap_width, cap_height)}, 
 #:                                                  encode = "lores")
-camera.configure(config_test)
+camera.configure(config)
 camera.set_controls({"ExposureTime": exposure_time, "AnalogueGain": analog_gain})
 camera.start()
 
@@ -78,7 +78,9 @@ for i in range(test_frame_times):
     t = threading.Thread(target = get_images, args=(i, camera))    
     t.start()
     threads.append(t)
-    time.sleep(0.05)
+    time.sleep(0.030)
+    if (i == 0):
+        time.sleep(0.1)
     
 for t in threads:
     t.join()
