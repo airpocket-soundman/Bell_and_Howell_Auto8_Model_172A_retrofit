@@ -130,7 +130,7 @@ flask run --host=0.0.0.0
 sudo apt install samba
 mkdir /home/[user]/share
 sudo chmod 777 /home/[user]/share
-sudo nano /etc/samba/smb.conf
+sudo nano /etc/samba/smb.confy
 ```
 追記
 ```
