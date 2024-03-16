@@ -4,21 +4,23 @@
 |-|-|
 |SBC|Raspberry Pi Zero2 W|
 |microSD|32GB以上|
-|OS|Bullseye 64bit lite|
+|OS|Bullseye 32bit lite|
+|sensor|IMX219|
 
 # OS version
 OS:Raspberry Pi OS Bullseye 64bit lite
 
 ```
+
 $ lsb_release -a
 No LSB modules are available.
-Distributor ID: Debian
-Description:    Debian GNU/Linux 11 (bullseye)
+Distributor ID: Raspbian
+Description:    Raspbian GNU/Linux 11 (bullseye)
 Release:        11
 Codename:       bullseye
 
 $ getconf LONG_BIT
-64
+32
 ```
 
 # USB SSHの有効化
@@ -52,11 +54,21 @@ sudo reboot
 
 # setup
 ```
-sudo apt update & sudo apt -y upgrade
-sudo apt -y install python3-dev python3-pip
-pip install picamera2
-pip install opencv-python
-sudo apt -y install libgl1-mesa-dev
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get -y install python3-dev
+sudo apt-get -y install python3-pip
+sudo apt-get -y install libgl1-mesa-dev
+sudo apt-get -y install libopenjp2-7-dev 
+sudo apt-get -y libavcodec-extra58 
+sudo apt-get -y libavformat58 
+sudo apt-get -y libswscale5 
+sudo apt-get -y libgtk-3-dev 
+sudo apt-get -y liblapack3 
+sudo apt-get -y libatlas-base-dev
+sudo pip install opencv-python==4.6.0.66
+sudo pip install opencv-contrib-python
+sudo pip install -U numpycd
 ```
 
 
@@ -72,15 +84,6 @@ dtoverlay=imx219
 sudo raspi-config
 ```
 3 Interface Options -> I1 Legacy Camera -> No
-
-
-### IMX708 (camera V3の場合)
-
-```
-sudo nano /boot/config.txt
-```
-
-dtoverlay=imx708
 
 
 ## swap無効化とtempのRAMディスク化
