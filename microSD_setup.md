@@ -8,7 +8,15 @@
 |sensor|IMX219|
 
 # OS version
-OS:Raspberry Pi OS Bullseye 64bit lite
+
+OS:Raspberry Pi OS Buster 32bit lite
+https://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2021-05-28/
+
+
+
+
+
+OS:Raspberry Pi OS Bullseye 32bit lite
 
 ```
 
@@ -53,6 +61,8 @@ sudo reboot
 
 
 # setup
+
+bullseye
 ```
 sudo apt-get update
 sudo apt-get upgrade
@@ -71,19 +81,46 @@ sudo pip install opencv-contrib-python
 sudo pip install -U numpycd
 ```
 
+buster
+```
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt install libhdf5-dev libqt4-test libqtgui4 libjasper1 libatlas-base-dev
+sudo apt-get -y install libopenexr23
+sudo apt-get -y install ffmpeg
+sudo apt-get -y install python3-dev
+sudo apt-get -y install python3-pip
+sudo pip3 install opencv-python==4.1.0.25
+sudo pip3 install opencv-contrib-python==4.1.0.25
+```
+```
+vcgencmd get_camera
+```
 
 ## カメラ設定
-### IMX219 (camera V2の場合)
-```
-sudo nano /boot/config.txt
-```
+https://yasuraka.dns04.com/raspberry-pi-camera-%E3%82%92%E6%9C%89%E5%8A%B9%E5%8C%96%E3%81%99%E3%82%8B
 
-dtoverlay=imx219
+IMX219 (camera V2) の設定
+libcameraモードではなく、Legacyモードを使用する！！
 
+bullseyeの場合
 ```
 sudo raspi-config
 ```
 3 Interface Options -> I1 Legacy Camera -> No
+
+※/boot/config.txtのdtoverlay=imx219は無効化しておくこと！
+
+```
+vcgencmd get_camera
+```
+で
+```
+```
+supported=1 detected=1, libcamera interfaces=0
+```
+とひょうじされればOK
+
 
 
 ## swap無効化とtempのRAMディスク化
