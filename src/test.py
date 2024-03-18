@@ -1,36 +1,25 @@
 import cv2
-from datetime import datetime
+import time
+# カメラデバイスを開く
+cap = cv2.VideoCapture(0) # 0は通常、システムのデフォルトカメラです
 
-# /dev/video0を指定
-DEV_ID = 0
+# 解像度を設定する
+# ビニングモードでの解像度1640x1232を設定
+cap.set(cv2.CAP_PROP_FRAME_WIDTH,  1280)         #1640
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT,  960)         #1232
+start_time = time.time()
+# 画像をキャプチャする
+ret, frame = cap.read()
+finish_time = time.time()
 
-# パラメータ
-WIDTH = 640
-HEIGHT = 480
+if ret:
+    # 画像をファイルに保存
 
-def main():
-    # /dev/video0を指定
-    cap = cv2.VideoCapture(DEV_ID)
+    cv2.imwrite('captured_image.jpg', frame)
 
-    # 解像度の指定
-    cap.set(cv2.CAP_PROP_FRAME_WIDTH, WIDTH)
-    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, HEIGHT)
+else:
+    print("画像のキャプチャに失敗しました")
 
-    # キャプチャの実施
-    ret, frame = cap.read()
-    if ret:
-        # ファイル名に日付を指定
-        date = datetime.now().strftime("%Y%m%d_%H%M%S")
-        path = "./" + date + ".jpg"
-        cv2.imwrite(path, frame)
-    else:
-        print("cant cap")
-
-    # 後片付け
-    cap.release()
-    cv2.destroyAllWindows()
-    return
-
-
-if __name__ == "__main__":
-    main()
+print(finish_time-start_time)
+# カメラデバイスを解放
+cap.release()

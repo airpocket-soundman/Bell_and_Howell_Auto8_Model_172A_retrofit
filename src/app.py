@@ -1,11 +1,10 @@
 from flask import render_template, Flask, Response
 import cv2
-from picamera2 import Picamera2
 import time
 import numpy as np
 from typing import List
 
-app = Flask(__name__, template_folder='temlates')   #templates_folderはデフォルトで'templates'なので本来定義は不要
+app = Flask(__name__, template_folder='templates')   #templates_folderはデフォルトで'templates'なので本来定義は不要
 
 CAP_WIDTH   = 320                   #出力動画の幅
 CAP_HEIGHT  = 240                   #出力動画の高さ
@@ -24,18 +23,15 @@ def gen_frames():
     count = 0
 
     # init camera
-    cap = Picamera2()
-    config = cap.create_still_configuration(main={"size":(CAP_WIDTH, CAP_HEIGHT)},raw={"size":(LAW_WIDTH,LAW_HEIGHT)}) 
-    cap.configure(config)
-    cap.set_controls({"ExposureTime":exposure_time, "AnalogueGain": analog_gain})
-    cap.start()
+    cap = cv2.VideoCapture(0)
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
     while True:
         print("count = ",count)
         start_time_frame = time.perf_counter()
 
-        frame = cap.capture_array()
-        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        ret, frame = cap.read()
 
         #フレームデータをjpgに圧縮
         ret, buffer = cv2.imencode('.jpg',frame)

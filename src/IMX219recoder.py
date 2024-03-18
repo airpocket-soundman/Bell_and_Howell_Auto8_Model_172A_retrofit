@@ -56,12 +56,6 @@ soundFile = "/home/zero2/workspace/silent.mp3"
 
 color_effects       = 0
 
-#def addSound(videoFile, soundFile):
-#    print("open clip")
-#    clip = mp.VideoFileClip(videoFile).subclip()
-#    print("add sound data")
-#    clip.write_videofile("soundMovie.mp4", audio = "silent.mp3")
-
 def timingPinWasPushed(gpio_pin):
     global timeLog, switch, flimLength, frameNum
     if (len(imgMem) <= maxFrame and frameNum <= filmLength):
