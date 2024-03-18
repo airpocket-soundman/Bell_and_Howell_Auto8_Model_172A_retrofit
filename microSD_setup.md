@@ -13,10 +13,7 @@ OS:Raspberry Pi OS Buster 32bit lite
 https://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2021-05-28/
 
 
-
-
-
-OS:Raspberry Pi OS Bullseye 32bit lite
+OS:Raspberry Pi OS Bullseye 32bit lite or 64bit lite
 
 ```
 
@@ -66,16 +63,7 @@ bullseye
 ```
 sudo apt-get update
 sudo apt-get upgrade
-sudo apt-get -y install python3-dev
-sudo apt-get -y install python3-pip
-sudo apt-get -y install libgl1-mesa-dev
-sudo apt-get -y install libopenjp2-7-dev 
-sudo apt-get -y install libavcodec-extra58 
-sudo apt-get -y install libavformat58 
-sudo apt-get -y install libswscale5 
-sudo apt-get -y install libgtk-3-dev 
-sudo apt-get -y install liblapack3 
-sudo apt-get -y install libatlas-base-dev
+sudo apt-get -y install python3-dev python3-pip libgl1-mesa-dev libopenjp2-7-dev libavcodec-extra58 libavformat58 libswscale5 libgtk-3-dev liblapack3 libatlas-base-dev
 sudo pip install opencv-python==4.6.0.66
 sudo pip install opencv-contrib-python
 sudo pip install -U numpy
@@ -85,11 +73,11 @@ buster
 ```
 sudo apt-get update
 sudo apt-get upgrade
-sudo apt install libhdf5-dev libqt4-test libqtgui4 libjasper1 libatlas-base-dev
-sudo apt-get -y install libopenexr23
-sudo apt-get -y install ffmpeg
-sudo apt-get -y install python3-dev
-sudo apt-get -y install python3-pip
+sudo apt -y install libhdf5-dev libqt4-test libqtgui4 libjasper1 libatlas-base-dev
+sudo apt -y install libopenexr23
+sudo apt -y install ffmpeg
+sudo apt -y install python3-dev
+sudo apt -y install python3-pip
 sudo pip3 install opencv-python==4.1.0.25
 sudo pip3 install opencv-contrib-python==4.1.0.25
 ```
@@ -116,10 +104,9 @@ vcgencmd get_camera
 ```
 で
 ```
-```
 supported=1 detected=1, libcamera interfaces=0
 ```
-とひょうじされればOK
+と表示されればOK
 
 
 
