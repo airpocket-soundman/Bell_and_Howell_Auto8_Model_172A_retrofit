@@ -28,13 +28,13 @@ camera              = 0       # 0:172A  1:motocamera    2:Bolex C-8
 number_still        = 0
 number_cut          = 0
 number_frame        = 0
-rec_size            = 1
-rec_pix             = [[ 320,  240], [ 640, 480], [960, 720]]
+rec_size            = 3
+rec_pix             = [[ 320,  240], [ 640, 480], [960, 720], [1280, 720], [1280, 960]]
 time_log            = []
 time_log2           = []
 time_log3           = []
 time_log4           = []
-exposure_time       = 2000  # 1000-100000  defo:5000
+exposure_time       = 1000  # 1000-100000  defo:5000
 analogue_gain       = 16	# 1.0-20.0    defo:2.0
 shutter_delay_time  = 0 * 0.001   # シャッター動作を検出してから画像取得するまでの遅延時間 ms
 
@@ -49,9 +49,16 @@ film_mode           = 0     #0:mono,    1:mono,     2:color,    3:color,
 is_shooting         = False
 recording_completed = True
 
-buffers             = 1
+buffers             = 4
 jpg_encode          = False
 
+rec_finish_threshold_time    = 1        #sec  *detect rec button release
+number_max_frame    = 200               #連続撮影可能な最大フレーム数　とりあえず16FPS x 60sec = 960フレーム
+record_fps          = 16                #MP4へ変換する際のFPS設定値
+tmp_folder_path     = "/tmp/img/"
+share_folder_path   = os.path.expanduser("~/share/")
+
+codec               = cv2.VideoWriter_fourcc(*'mp4v')
 
 if camera == 0:
     # Bell & Howell 172A
@@ -109,14 +116,8 @@ GPIO.setup(pin_led_red,     GPIO.OUT)
 GPIO.setup(pin_led_green,   GPIO.OUT)
 
 
-rec_finish_threshold_time    = 1        #sec  *detect rec button release
-number_max_frame    = 20               #連続撮影可能な最大フレーム数　とりあえず16FPS x 60sec = 960フレーム
-record_fps          = 16                #MP4へ変換する際のFPS設定値
-tmp_folder_path     = "/tmp/img/"
-share_folder_path   = os.path.expanduser("~/share/")
 
-codec               = cv2.VideoWriter_fourcc(*'mp4v')
-camera = cv2.VideoCapture(0)
+camera = cv2.VideoCapture(0,cv2.CAP_V4L2)
 
 # shareフォルダの動画と静止画のファイル番号を読み取る
 def find_max_number_in_share_folder():
@@ -152,7 +153,24 @@ def set_camera_mode():
     rec_height  = rec_pix[rec_size][1]
     camera.set(cv2.CAP_PROP_FRAME_WIDTH,  rec_width)
     camera.set(cv2.CAP_PROP_FRAME_HEIGHT, rec_height)
-    camera.set(cv2.CAP_PROP_BUFFERSIZE, 1)
+    camera.set(cv2.CAP_PROP_BUFFERSIZE, buffers)
+    camera.set(cv2.CAP_PROP_FPS,90)
+
+    #os.system('v4l2-ctl -d /dev/video0 -c brightness=100')               #0-100
+    #os.system('v4l2-ctl -d /dev/video0 -c contrast=30')                  #-100-100
+    #os.system('v4l2-ctl -d /dev/video0 -c saturation=0')                #-100-100    
+    #os.system('v4l2-ctl -d /dev/video0 -c red_balance=900')            #1-7999
+    #os.system('v4l2-ctl -d /dev/video0 -c blue_balance=1000')           #1-7999
+    #os.system('v4l2-ctl -d /dev/video0 -c sharpness=0')                 #0-100
+    #os.system('v4l2-ctl -d /dev/video0 -c color_effects=0')             #0:None 1:Mono 2:Sepia 3:Negative 14:Antique 15:set cb/cr
+    os.system('v4l2-ctl -d /dev/video0 -c rotate=180')                  #0-360
+    #os.system('v4l2-ctl -d /dev/video0 -c video_bitrate_mode=0')        #0:variable 1:Constant
+    #os.system('v4l2-ctl -d /dev/video0 -c video_bitrate=10000000')      #25000-25000000 2500step
+    os.system('v4l2-ctl -d /dev/video0 -c auto_exposure=1')
+    os.system('v4l2-ctl -d /dev/video0 -c exposure_time_absolute=30')
+    #os.system('v4l2-ctl -d /dev/video0 -c iso_sensitivity_auto=1')      #0:manual 1:auto
+    #os.system('v4l2-ctl -d /dev/video0 -c iso_sensitivity=4')           #0:0 1:100000 2:200000 3:400000 4:800000
+
 
     print("rec_size :width ", rec_width, "height", rec_height)
 
