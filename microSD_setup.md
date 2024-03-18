@@ -70,15 +70,15 @@ sudo apt-get -y install python3-dev
 sudo apt-get -y install python3-pip
 sudo apt-get -y install libgl1-mesa-dev
 sudo apt-get -y install libopenjp2-7-dev 
-sudo apt-get -y libavcodec-extra58 
-sudo apt-get -y libavformat58 
-sudo apt-get -y libswscale5 
-sudo apt-get -y libgtk-3-dev 
-sudo apt-get -y liblapack3 
-sudo apt-get -y libatlas-base-dev
+sudo apt-get -y install libavcodec-extra58 
+sudo apt-get -y install libavformat58 
+sudo apt-get -y install libswscale5 
+sudo apt-get -y install libgtk-3-dev 
+sudo apt-get -y install liblapack3 
+sudo apt-get -y install libatlas-base-dev
 sudo pip install opencv-python==4.6.0.66
 sudo pip install opencv-contrib-python
-sudo pip install -U numpycd
+sudo pip install -U numpy
 ```
 
 buster
